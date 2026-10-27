@@ -15,6 +15,15 @@
             <a href="{{ route('participant.dashboard') }}" class="text-base font-bold text-blue-700">LSP Pamtara</a>
 
             <div class="flex items-center gap-3">
+                @php($unreadCount = auth()->user()->appNotifications()->whereNull('read_at')->count())
+                <a href="{{ route('participant.notifications.index') }}" class="relative min-h-[44px] min-w-[44px] content-center text-center text-gray-700 hover:text-blue-700" aria-label="Notifikasi">
+                    &#128276;
+                    @if($unreadCount > 0)
+                        <span class="absolute -top-1 right-1 inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-600 px-1 text-xs font-semibold text-white">
+                            {{ $unreadCount }}
+                        </span>
+                    @endif
+                </a>
                 <a href="{{ route('profile.edit') }}" class="min-h-[44px] content-center text-sm text-gray-700 hover:text-blue-700">
                     {{ auth()->user()->name }}
                 </a>
@@ -31,6 +40,9 @@
     <main class="mx-auto max-w-4xl px-4 py-6 sm:px-6">
         @if (session('status'))
             <x-alert type="success" class="mb-6">{{ session('status') }}</x-alert>
+        @endif
+        @if (session('error'))
+            <x-alert type="danger" class="mb-6">{{ session('error') }}</x-alert>
         @endif
 
         {{ $slot }}

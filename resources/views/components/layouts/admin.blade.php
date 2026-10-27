@@ -55,6 +55,13 @@
                    class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.assessment-schedules.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
                     Jadwal Ujikom
                 </a>
+
+                <p class="mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">Pendaftaran</p>
+
+                <a href="{{ route('admin.registrations.index') }}"
+                   class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.registrations.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    Pendaftaran &amp; Verifikasi
+                </a>
             </nav>
         </aside>
 
@@ -80,6 +87,9 @@
             <main class="px-4 py-6 sm:px-6">
                 @if (session('status'))
                     <x-alert type="success" class="mb-6">{{ session('status') }}</x-alert>
+                @endif
+                @if (session('error'))
+                    <x-alert type="danger" class="mb-6">{{ session('error') }}</x-alert>
                 @endif
 
                 {{ $slot }}

@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\AssessorController;
 use App\Http\Controllers\Admin\CertificationTypeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DocumentRequirementController;
+use App\Http\Controllers\Admin\DocumentReviewController;
+use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\TukController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,4 +50,9 @@ Route::middleware(['auth', 'active', 'role:admin'])
         Route::post('assessment-schedules', [AssessmentScheduleController::class, 'store'])->name('assessment-schedules.store');
         Route::get('assessment-schedules/{assessment_schedule}/edit', [AssessmentScheduleController::class, 'edit'])->name('assessment-schedules.edit');
         Route::put('assessment-schedules/{assessment_schedule}', [AssessmentScheduleController::class, 'update'])->name('assessment-schedules.update');
+
+        Route::get('registrations', [RegistrationController::class, 'index'])->name('registrations.index');
+        Route::get('registrations/{registration}', [RegistrationController::class, 'show'])->name('registrations.show');
+        Route::post('registrations/{registration}/documents/{submission}/approve', [DocumentReviewController::class, 'approve'])->name('registrations.documents.approve');
+        Route::post('registrations/{registration}/documents/{submission}/request-revision', [DocumentReviewController::class, 'requestRevision'])->name('registrations.documents.request-revision');
     });

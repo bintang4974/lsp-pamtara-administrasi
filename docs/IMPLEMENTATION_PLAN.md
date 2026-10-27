@@ -49,16 +49,16 @@ Centang `[x]` hanya setelah benar-benar selesai **dan** diverifikasi (migration/
 - [x] Smoke check: tidak ada kuota; jadwal berpendaftar tidak terhapus.
 
 ## Phase 5 — Registration dan Document Workflow
-- [ ] `NumberGenerator` + tabel `number_sequences` (aman race condition, pakai `lockForUpdate` dalam transaction).
-- [ ] Form pendaftaran bertahap: sertifikasi → TUK → jadwal → data diri → dokumen.
-- [ ] `RegistrationService` (transaction, **snapshot persyaratan**, record dokumen).
-- [ ] Upload dokumen ke **disk privat**, versioning, validasi MIME/ukuran dari snapshot.
-- [ ] Endpoint unduh/preview terotorisasi (Policy).
-- [ ] Verifikasi dokumen admin: setujui / minta revisi (alasan) / lihat versi lama.
-- [ ] `AdministrativeEvaluator` + `RegistrationStatusService` + histori.
-- [ ] Notifikasi dalam aplikasi (`app_notifications`) + UI baca/tandai dibaca.
-- [ ] Dashboard peserta (stepper dari data nyata via `JourneyPresenter`).
-- [ ] Daftar uji manual: AC-02, AC-03, AC-04.
+- [x] `NumberGenerator` + tabel `number_sequences` (aman race condition, pakai `lockForUpdate` dalam transaction).
+- [x] Form pendaftaran bertahap: sertifikasi → TUK → jadwal → data diri → dokumen.
+- [x] `RegistrationService` (transaction, **snapshot persyaratan**, record dokumen).
+- [x] Upload dokumen ke **disk privat**, versioning, validasi MIME/ukuran dari snapshot.
+- [x] Endpoint unduh/preview terotorisasi (Policy).
+- [x] Verifikasi dokumen admin: setujui / minta revisi (alasan) / lihat versi lama.
+- [x] `AdministrativeEvaluator` + `RegistrationStatusService` + histori.
+- [x] Notifikasi dalam aplikasi (`app_notifications`) + UI baca/tandai dibaca.
+- [x] Dashboard peserta (stepper dari data nyata via `JourneyPresenter`).
+- [x] Daftar uji manual: AC-02, AC-03, AC-04.
 
 ## Phase 6 — Payment Workflow
 - [ ] Pengaturan rekening/VA bersama + nominal + instruksi (admin, diaudit).

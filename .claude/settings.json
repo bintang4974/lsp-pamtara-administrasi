@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(php artisan:*)",
+      "Bash(composer install:*)",
+      "Bash(composer require:*)",
+      "Bash(composer dump-autoload:*)",
+      "Bash(composer show:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(npx:*)",
+      "Bash(php -v)",
+      "Bash(php -m)",
+      "Bash(./vendor/bin/pint:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "ask": [
+      "Bash(php artisan migrate:fresh:*)",
+      "Bash(php artisan migrate:refresh:*)",
+      "Bash(php artisan migrate:reset:*)",
+      "Bash(php artisan migrate:rollback:*)",
+      "Bash(php artisan db:wipe:*)",
+      "Bash(git push:*)",
+      "Bash(composer remove:*)",
+      "Bash(composer update:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Edit(./.env)",
+      "Edit(./.env.*)",
+      "Write(./.env)",
+      "Write(./.env.*)",
+      "Bash(rm -rf:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean:*)",
+      "Bash(git push --force:*)",
+      "Bash(mysql:*)",
+      "Bash(mysqldump:*)"
+    ]
+  }
+}

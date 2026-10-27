@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -26,6 +27,9 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
+     * Role dipaksa `participant` di server (lihat ARCHITECTURE.md §7); 'role' tidak pernah
+     * diambil dari request dan tidak masuk $fillable, sehingga tidak bisa ditimpa peserta.
+     *
      * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
@@ -33,14 +37,21 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'phone' => ['required', 'string', 'max:30'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->forceFill([
+            'role' => UserRole::Participant,
+            'status' => 'active',
+        ])->save();
 
         event(new Registered($user));
 

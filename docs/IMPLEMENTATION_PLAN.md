@@ -31,22 +31,22 @@ Centang `[x]` hanya setelah benar-benar selesai **dan** diverifikasi (migration/
 - ❌ Jangan buat kolom kuota/capacity; jangan seed TUK fiktif sebagai data produksi.
 
 ## Phase 3 — Auth dan UI Foundation
-- [ ] Modifikasi registrasi Breeze: field `phone`, role dipaksa `participant`, akun `inactive` ditolak login.
-- [ ] Middleware `EnsureUserHasRole`; route group `admin` dan `peserta`.
-- [ ] Layout `public`, `participant`, `admin`; navigasi responsive (drawer admin).
-- [ ] Komponen Blade dasar (status-badge, cert-badge, empty-state, confirm-modal, alert).
-- [ ] Halaman error (403/404/500), empty/loading state.
-- [ ] Lokalisasi Indonesia (`APP_LOCALE=id`), timezone.
-- [ ] Smoke check: login/logout, peserta tidak bisa akses `/admin`, registrasi tidak bisa jadi admin, akun nonaktif ditolak.
+- [x] Modifikasi registrasi Breeze: field `phone`, role dipaksa `participant`, akun `inactive` ditolak login.
+- [x] Middleware `EnsureUserHasRole`; route group `admin` dan `peserta`.
+- [x] Layout `public`, `participant`, `admin`; navigasi responsive (drawer admin).
+- [x] Komponen Blade dasar (status-badge, cert-badge, empty-state, confirm-modal, alert).
+- [x] Halaman error (403/404/500), empty/loading state.
+- [x] Lokalisasi Indonesia (`APP_LOCALE=id`), timezone.
+- [x] Smoke check: login/logout, peserta tidak bisa akses `/admin`, registrasi tidak bisa jadi admin, akun nonaktif ditolak.
 
 ## Phase 4 — Master Data dan Jadwal
-- [ ] CRUD sertifikasi, TUK, asesor (nonaktifkan, bukan hapus bila terpakai).
-- [ ] CRUD jadwal + penugasan banyak asesor + validasi (`ends_at > starts_at`, deadline).
-- [ ] CRUD persyaratan dokumen (wajib/opsional, MIME, ukuran, urutan, aktif).
-- [ ] `ScheduleChangeService` (audit + penanda undangan usang + notifikasi).
-- [ ] `AuditLogger`.
-- [ ] Halaman publik info sertifikasi/TUK/persyaratan.
-- [ ] Smoke check: tidak ada kuota; jadwal berpendaftar tidak terhapus.
+- [x] CRUD sertifikasi, TUK, asesor (nonaktifkan, bukan hapus bila terpakai).
+- [x] CRUD jadwal + penugasan banyak asesor + validasi (`ends_at > starts_at`, deadline).
+- [x] CRUD persyaratan dokumen (wajib/opsional, MIME, ukuran, urutan, aktif).
+- [x] `ScheduleChangeService` (audit + penanda undangan usang + notifikasi).
+- [x] `AuditLogger`.
+- [x] Halaman publik info sertifikasi/TUK/persyaratan.
+- [x] Smoke check: tidak ada kuota; jadwal berpendaftar tidak terhapus.
 
 ## Phase 5 — Registration dan Document Workflow
 - [ ] `NumberGenerator` + tabel `number_sequences` (aman race condition, pakai `lockForUpdate` dalam transaction).

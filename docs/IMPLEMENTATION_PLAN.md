@@ -69,12 +69,12 @@ Centang `[x]` hanya setelah benar-benar selesai **dan** diverifikasi (migration/
 - [x] Daftar uji manual: AC-05 (unggah ≠ lunas; hanya admin yang bisa `paid`).
 
 ## Phase 7 — Invitation dan Assessment Result
-- [ ] `InvitationService`: cek `paid` + data lengkap; render PDF **dari DB**; snapshot jadwal; versi; `is_current`.
-- [ ] Unduh undangan terotorisasi (hanya pemilik/admin).
-- [ ] Penerbitan ulang saat jadwal berubah (versi lama ditandai usang).
-- [ ] `ResultService`: input, koreksi (alasan wajib), histori dalam satu transaction, pengumuman.
-- [ ] Tampilan hasil peserta ("Belum diumumkan" bila belum).
-- [ ] Daftar uji manual: AC-06, AC-07.
+- [x] `InvitationService`: cek `paid` + data lengkap; render PDF **dari DB**; snapshot jadwal; versi; `is_current`.
+- [x] Unduh undangan terotorisasi (hanya pemilik/admin).
+- [x] Penerbitan ulang saat jadwal berubah (versi lama ditandai usang).
+- [x] `ResultService`: input, koreksi (alasan wajib), histori dalam satu transaction, pengumuman.
+- [x] Tampilan hasil peserta ("Belum diumumkan" bila belum).
+- [x] Daftar uji manual: AC-06, AC-07.
 
 ## Phase 8 — Reports dan Import
 - [ ] Laporan: pendaftaran (periode/sertifikasi/TUK), peserta per jadwal, kelengkapan dokumen, pembayaran, rekap penerimaan (terkonfirmasi), hasil, riwayat hasil, rekap total.

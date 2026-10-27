@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Participant\DashboardController;
+use App\Http\Controllers\Participant\InvitationController;
 use App\Http\Controllers\Participant\NotificationController;
 use App\Http\Controllers\Participant\PaymentController;
 use App\Http\Controllers\Participant\RegistrationDocumentController;
 use App\Http\Controllers\Participant\RegistrationWizardController;
+use App\Http\Controllers\Participant\ResultController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'active', 'role:participant'])
@@ -30,6 +32,9 @@ Route::middleware(['auth', 'active', 'role:participant'])
 
         Route::get('pendaftaran/{registration}/pembayaran', [PaymentController::class, 'show'])->name('registrations.payment');
         Route::post('pendaftaran/{registration}/pembayaran/bukti', [PaymentController::class, 'uploadProof'])->name('registrations.payment.upload');
+
+        Route::get('pendaftaran/{registration}/undangan', [InvitationController::class, 'show'])->name('registrations.invitation');
+        Route::get('pendaftaran/{registration}/hasil', [ResultController::class, 'show'])->name('registrations.result');
 
         Route::get('notifikasi', [NotificationController::class, 'index'])->name('notifications.index');
         Route::post('notifikasi/{notification}/baca', [NotificationController::class, 'markRead'])->name('notifications.read');

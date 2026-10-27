@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\ApplicationSettingController;
+use App\Http\Controllers\Admin\AssessmentResultController;
 use App\Http\Controllers\Admin\AssessmentScheduleController;
 use App\Http\Controllers\Admin\AssessorController;
 use App\Http\Controllers\Admin\CertificationTypeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DocumentRequirementController;
 use App\Http\Controllers\Admin\DocumentReviewController;
+use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\Admin\PaymentReviewController;
 use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\TukController;
@@ -64,4 +66,11 @@ Route::middleware(['auth', 'active', 'role:admin'])
 
         Route::get('settings', [ApplicationSettingController::class, 'edit'])->name('settings.edit');
         Route::put('settings', [ApplicationSettingController::class, 'update'])->name('settings.update');
+
+        Route::post('registrations/{registration}/invitation', [InvitationController::class, 'store'])->name('registrations.invitation.store');
+
+        Route::post('registrations/{registration}/result', [AssessmentResultController::class, 'store'])->name('registrations.result.store');
+        Route::put('registrations/{registration}/result', [AssessmentResultController::class, 'update'])->name('registrations.result.update');
+        Route::post('registrations/{registration}/result/announce', [AssessmentResultController::class, 'announce'])->name('registrations.result.announce');
+        Route::post('assessment-schedules/{assessment_schedule}/announce-results', [AssessmentResultController::class, 'announceSchedule'])->name('assessment-schedules.announce-results');
     });

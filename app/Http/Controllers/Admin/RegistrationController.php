@@ -48,11 +48,14 @@ class RegistrationController extends Controller
             'user.participantProfile',
             'certificationType',
             'assessmentSchedule.tuk',
+            'assessmentSchedule.assessors',
             'documents.requirement',
             'documents.submissions.uploader',
             'documents.submissions.reviewer',
             'payment.submissions.uploader',
             'payment.submissions.reviewer',
+            'invitationDocuments',
+            'assessmentResult.histories.changedBy',
             'histories.changedBy',
         ]);
 

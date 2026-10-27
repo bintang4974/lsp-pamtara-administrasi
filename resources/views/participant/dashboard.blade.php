@@ -55,6 +55,16 @@
                                 Lihat Pembayaran
                             </a>
                         @endif
+                        @if(in_array($registration->status->value, ['paid', 'scheduled', 'completed'], true))
+                            <a href="{{ route('participant.registrations.invitation', $registration) }}" class="inline-flex min-h-[44px] items-center rounded-md border border-blue-300 px-4 text-sm font-medium text-blue-700 hover:bg-blue-50">
+                                Undangan Ujikom
+                            </a>
+                        @endif
+                        @if($registration->status->value === 'completed')
+                            <a href="{{ route('participant.registrations.result', $registration) }}" class="inline-flex min-h-[44px] items-center rounded-md border border-blue-300 px-4 text-sm font-medium text-blue-700 hover:bg-blue-50">
+                                Hasil Ujikom
+                            </a>
+                        @endif
                     </div>
                 </div>
             @endforeach

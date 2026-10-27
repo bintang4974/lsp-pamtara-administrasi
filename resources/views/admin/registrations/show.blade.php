@@ -181,6 +181,124 @@
             </div>
 
             <div class="rounded-lg border border-gray-200 bg-white p-5">
+                <h2 class="font-semibold text-gray-900">Undangan Ujikom</h2>
+
+                @php($currentInvitation = $registration->invitationDocuments->firstWhere('is_current', true))
+
+                @if(in_array($registration->status->value, ['paid', 'scheduled', 'completed'], true))
+                    <div class="mt-3 flex flex-wrap items-center gap-3">
+                        @if($currentInvitation)
+                            <span class="text-sm text-gray-700">
+                                {{ $currentInvitation->document_number }} &middot; diterbitkan {{ $currentInvitation->issued_at->format('d M Y H:i') }}
+                            </span>
+                            <a href="{{ route('invitations.download', $currentInvitation) }}" class="text-sm text-blue-700 hover:underline">Unduh</a>
+                        @else
+                            <p class="text-sm text-gray-500">Belum diterbitkan.</p>
+                        @endif
+                    </div>
+
+                    <form method="POST" action="{{ route('admin.registrations.invitation.store', $registration) }}" class="mt-3">
+                        @csrf
+                        <button type="submit" class="min-h-[44px] rounded-md border border-gray-300 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            {{ $currentInvitation ? 'Terbitkan Ulang' : 'Terbitkan Undangan' }}
+                        </button>
+                    </form>
+
+                    @if($registration->invitationDocuments->where('is_current', false)->isNotEmpty())
+                        <div class="mt-3 space-y-1 text-xs text-gray-500">
+                            <p class="font-medium">Versi usang:</p>
+                            @foreach($registration->invitationDocuments->where('is_current', false)->sortByDesc('version_number') as $old)
+                                <div>{{ $old->document_number }} &middot; <a href="{{ route('invitations.download', $old) }}" class="text-blue-700 hover:underline">Unduh</a></div>
+                            @endforeach
+                        </div>
+                    @endif
+                @else
+                    <p class="mt-2 text-sm text-gray-500">Belum relevan — menunggu pembayaran dikonfirmasi.</p>
+                @endif
+            </div>
+
+            <div class="rounded-lg border border-gray-200 bg-white p-5">
+                <h2 class="font-semibold text-gray-900">Hasil Ujikom</h2>
+
+                @if(! in_array($registration->status->value, ['scheduled', 'completed'], true))
+                    <p class="mt-2 text-sm text-gray-500">Belum relevan — menunggu undangan/ujikom.</p>
+                @else
+                    @php($result = $registration->assessmentResult)
+
+                    @if(! $result)
+                        <form method="POST" action="{{ route('admin.registrations.result.store', $registration) }}" class="mt-3 space-y-3">
+                            @csrf
+                            <div class="flex gap-4">
+                                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                                    <input type="radio" name="result" value="competent" required class="h-5 w-5"> Kompeten
+                                </label>
+                                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                                    <input type="radio" name="result" value="not_competent" required class="h-5 w-5"> Tidak Kompeten
+                                </label>
+                            </div>
+                            <textarea name="notes" rows="2" placeholder="Catatan (opsional)"
+                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"></textarea>
+                            <button type="submit" class="min-h-[44px] rounded-md bg-blue-700 px-4 text-sm font-medium text-white hover:bg-blue-800">
+                                Simpan Hasil
+                            </button>
+                        </form>
+                    @else
+                        <div class="mt-3 flex flex-wrap items-center gap-3">
+                            <x-status-badge :label="$result->result->label()" :tone="$result->result->value === 'competent' ? 'success' : 'danger'" />
+                            @if($result->isAnnounced())
+                                <span class="text-sm text-gray-500">Diumumkan {{ $result->announced_at->format('d M Y H:i') }}</span>
+                            @else
+                                <form method="POST" action="{{ route('admin.registrations.result.announce', $registration) }}">
+                                    @csrf
+                                    <button type="submit" class="min-h-[44px] rounded-md bg-green-600 px-4 text-sm font-medium text-white hover:bg-green-700">
+                                        Umumkan
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+
+                        <button type="button" x-data x-on:click="$dispatch('open-modal-correct-result')"
+                            class="mt-3 min-h-[44px] rounded-md border border-gray-300 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            Koreksi Hasil
+                        </button>
+
+                        <x-confirm-modal id="correct-result" title="Koreksi Hasil Ujikom"
+                            :form-action="route('admin.registrations.result.update', $registration)" form-method="PUT" confirm-label="Simpan Koreksi">
+                            <div class="space-y-3">
+                                <div class="flex gap-4">
+                                    <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                                        <input type="radio" name="result" value="competent" {{ $result->result->value === 'competent' ? 'checked' : '' }} required class="h-5 w-5"> Kompeten
+                                    </label>
+                                    <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                                        <input type="radio" name="result" value="not_competent" {{ $result->result->value === 'not_competent' ? 'checked' : '' }} required class="h-5 w-5"> Tidak Kompeten
+                                    </label>
+                                </div>
+                                <div>
+                                    <label for="result-reason" class="block text-sm font-medium text-gray-700">Alasan koreksi (wajib)</label>
+                                    <textarea id="result-reason" name="reason" rows="2" required
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"></textarea>
+                                </div>
+                            </div>
+                        </x-confirm-modal>
+
+                        @if($result->histories->isNotEmpty())
+                            <div class="mt-4 space-y-1 text-xs text-gray-500">
+                                <p class="font-medium">Riwayat hasil:</p>
+                                @foreach($result->histories->sortByDesc('changed_at') as $h)
+                                    <div>
+                                        {{ $h->old_result?->label() ?? '-' }} &rarr; {{ $h->new_result->label() }}
+                                        &middot; {{ $h->changed_at->format('d M Y H:i') }}
+                                        @if($h->changedBy) &middot; {{ $h->changedBy->name }} @endif
+                                        &middot; {{ $h->reason }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    @endif
+                @endif
+            </div>
+
+            <div class="rounded-lg border border-gray-200 bg-white p-5">
                 <h2 class="font-semibold text-gray-900">Riwayat Status</h2>
                 <ol class="mt-3 space-y-2 text-sm">
                     @foreach($registration->histories->sortByDesc('changed_at') as $history)

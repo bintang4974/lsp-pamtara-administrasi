@@ -14,20 +14,20 @@ Centang `[x]` hanya setelah benar-benar selesai **dan** diverifikasi (migration/
 ---
 
 ## Phase 1 — Repository Assessment
-- [ ] Periksa struktur proyek, versi PHP (`php -v`, harus ≥ 8.3), Composer, Node, MySQL.
-- [ ] Jika repo kosong → setup sesuai `ARCHITECTURE.md` §1. Jika sudah ada aplikasi → pertahankan struktur & dependensi kompatibel; jangan buat ulang.
-- [ ] Identifikasi fitur existing, `.env`, dan risiko perubahan file existing.
-- [ ] Pasang Laravel 13 + Breeze (Blade) bila repo kosong; pastikan `php artisan migrate` dan halaman login/registrasi bawaan berjalan.
-- [ ] Tulis ringkasan kondisi repo dan rencana berdasarkan temuan nyata.
+- [x] Periksa struktur proyek, versi PHP (`php -v`, harus ≥ 8.3), Composer, Node, MySQL.
+- [x] Jika repo kosong → setup sesuai `ARCHITECTURE.md` §1. Jika sudah ada aplikasi → pertahankan struktur & dependensi kompatibel; jangan buat ulang.
+- [x] Identifikasi fitur existing, `.env`, dan risiko perubahan file existing.
+- [x] Pasang Laravel 13 + Breeze (Blade) bila repo kosong; pastikan `php artisan migrate` dan halaman login/registrasi bawaan berjalan.
+- [x] Tulis ringkasan kondisi repo dan rencana berdasarkan temuan nyata.
 
 ## Phase 2 — Database Foundation
-- [ ] Migration semua tabel di `DATABASE.md` (FK, unique, index).
-- [ ] Model Eloquent + relasi + `$fillable` ketat + cast Enum.
-- [ ] Enum: `UserRole`, `RegistrationStatus`, `DocumentStatus`, `PaymentStatus`, `ScheduleStatus`, `AssessmentResult`.
-- [ ] Seeder sertifikasi; seeder dev (admin, peserta, TUK DUMMY) hanya `local`/`testing`.
-- [ ] Command `app:create-admin` (interaktif, aman).
-- [ ] Factory untuk model utama.
-- [ ] `migrate:fresh --seed` berhasil di DB development.
+- [x] Migration semua tabel di `DATABASE.md` (FK, unique, index).
+- [x] Model Eloquent + relasi + `$fillable` ketat + cast Enum.
+- [x] Enum: `UserRole`, `RegistrationStatus`, `DocumentStatus`, `PaymentStatus`, `ScheduleStatus`, `AssessmentResult`.
+- [x] Seeder sertifikasi; seeder dev (admin, peserta, TUK DUMMY) hanya `local`/`testing`.
+- [x] Command `app:create-admin` (interaktif, aman).
+- [x] Factory untuk model utama.
+- [x] `migrate:fresh --seed` berhasil di DB development.
 - ❌ Jangan buat kolom kuota/capacity; jangan seed TUK fiktif sebagai data produksi.
 
 ## Phase 3 — Auth dan UI Foundation

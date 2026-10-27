@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Participant\DashboardController;
 use App\Http\Controllers\Participant\NotificationController;
+use App\Http\Controllers\Participant\PaymentController;
 use App\Http\Controllers\Participant\RegistrationDocumentController;
 use App\Http\Controllers\Participant\RegistrationWizardController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,9 @@ Route::middleware(['auth', 'active', 'role:participant'])
         Route::get('pendaftaran/{registration}/dokumen', [RegistrationDocumentController::class, 'show'])->name('registrations.documents');
         Route::post('pendaftaran/{registration}/dokumen/{document}', [RegistrationDocumentController::class, 'upload'])->name('registrations.documents.upload');
         Route::post('pendaftaran/{registration}/kirim', [RegistrationDocumentController::class, 'submit'])->name('registrations.submit');
+
+        Route::get('pendaftaran/{registration}/pembayaran', [PaymentController::class, 'show'])->name('registrations.payment');
+        Route::post('pendaftaran/{registration}/pembayaran/bukti', [PaymentController::class, 'uploadProof'])->name('registrations.payment.upload');
 
         Route::get('notifikasi', [NotificationController::class, 'index'])->name('notifications.index');
         Route::post('notifikasi/{notification}/baca', [NotificationController::class, 'markRead'])->name('notifications.read');

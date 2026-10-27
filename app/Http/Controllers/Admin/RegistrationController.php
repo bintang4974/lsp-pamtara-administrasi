@@ -51,6 +51,8 @@ class RegistrationController extends Controller
             'documents.requirement',
             'documents.submissions.uploader',
             'documents.submissions.reviewer',
+            'payment.submissions.uploader',
+            'payment.submissions.reviewer',
             'histories.changedBy',
         ]);
 

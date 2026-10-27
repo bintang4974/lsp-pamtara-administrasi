@@ -46,10 +46,15 @@
                         </div>
                     @endif
 
-                    <div class="mt-4">
+                    <div class="mt-4 flex flex-wrap gap-3">
                         <a href="{{ route('participant.registrations.documents', $registration) }}" class="inline-flex min-h-[44px] items-center rounded-md border border-gray-300 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                            Lihat Detail
+                            Lihat Dokumen
                         </a>
+                        @if($registration->payment)
+                            <a href="{{ route('participant.registrations.payment', $registration) }}" class="inline-flex min-h-[44px] items-center rounded-md border border-blue-300 px-4 text-sm font-medium text-blue-700 hover:bg-blue-50">
+                                Lihat Pembayaran
+                            </a>
+                        @endif
                     </div>
                 </div>
             @endforeach

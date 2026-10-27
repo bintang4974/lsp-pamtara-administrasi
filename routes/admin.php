@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\ApplicationSettingController;
 use App\Http\Controllers\Admin\AssessmentScheduleController;
 use App\Http\Controllers\Admin\AssessorController;
 use App\Http\Controllers\Admin\CertificationTypeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DocumentRequirementController;
 use App\Http\Controllers\Admin\DocumentReviewController;
+use App\Http\Controllers\Admin\PaymentReviewController;
 use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\TukController;
 use Illuminate\Support\Facades\Route;
@@ -55,4 +57,11 @@ Route::middleware(['auth', 'active', 'role:admin'])
         Route::get('registrations/{registration}', [RegistrationController::class, 'show'])->name('registrations.show');
         Route::post('registrations/{registration}/documents/{submission}/approve', [DocumentReviewController::class, 'approve'])->name('registrations.documents.approve');
         Route::post('registrations/{registration}/documents/{submission}/request-revision', [DocumentReviewController::class, 'requestRevision'])->name('registrations.documents.request-revision');
+
+        Route::post('registrations/{registration}/payment/create', [PaymentReviewController::class, 'create'])->name('registrations.payment.create');
+        Route::post('registrations/{registration}/payment/confirm', [PaymentReviewController::class, 'confirm'])->name('registrations.payment.confirm');
+        Route::post('registrations/{registration}/payment/{submission}/request-revision', [PaymentReviewController::class, 'requestRevision'])->name('registrations.payment.request-revision');
+
+        Route::get('settings', [ApplicationSettingController::class, 'edit'])->name('settings.edit');
+        Route::put('settings', [ApplicationSettingController::class, 'update'])->name('settings.update');
     });

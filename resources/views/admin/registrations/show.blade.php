@@ -85,6 +85,102 @@
             </div>
 
             <div class="rounded-lg border border-gray-200 bg-white p-5">
+                <h2 class="font-semibold text-gray-900">Pembayaran</h2>
+
+                @if(! $registration->payment)
+                    @if($registration->status->value === 'administratively_approved')
+                        <p class="mt-2 text-sm text-gray-500">Tagihan belum dibuat (nominal mungkin belum diatur saat lolos administrasi).</p>
+                        <form method="POST" action="{{ route('admin.registrations.payment.create', $registration) }}" class="mt-3">
+                            @csrf
+                            <button type="submit" class="min-h-[44px] rounded-md border border-gray-300 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                Buat Tagihan Pembayaran
+                            </button>
+                        </form>
+                    @else
+                        <p class="mt-2 text-sm text-gray-500">Belum relevan — pendaftaran belum lolos administrasi.</p>
+                    @endif
+                @else
+                    @php($payment = $registration->payment)
+                    <div class="mt-3 flex flex-wrap items-center justify-between gap-2">
+                        <p class="text-sm text-gray-700">Diharapkan: <strong>Rp {{ number_format($payment->expected_amount, 0, ',', '.') }}</strong></p>
+                        <x-status-badge :label="$payment->status->label()" tone="info" />
+                    </div>
+
+                    @if($payment->submissions->isEmpty())
+                        <p class="mt-3 text-sm text-gray-500">Peserta belum mengunggah bukti.</p>
+                    @else
+                        <div class="mt-3 space-y-2">
+                            @foreach($payment->submissions->sortByDesc('version_number') as $submission)
+                                <div class="rounded bg-gray-50 p-3 text-sm">
+                                    <div class="flex flex-wrap items-center justify-between gap-2">
+                                        <span>
+                                            <span class="font-medium">v{{ $submission->version_number }}</span>
+                                            {{ $submission->original_filename }}
+                                            <a href="{{ route('payments.download', $submission) }}" class="ms-2 text-blue-700 hover:underline">Unduh</a>
+                                            <x-status-badge :label="$submission->status->label()" tone="neutral" class="ms-2" />
+                                        </span>
+
+                                        @if($submission->id === $payment->submissions->sortByDesc('version_number')->first()->id && $payment->status->value === 'under_review')
+                                            <button type="button" x-data x-on:click="$dispatch('open-modal-payment-revision-{{ $submission->id }}')"
+                                                class="min-h-[44px] rounded-md bg-red-600 px-3 text-xs font-medium text-white hover:bg-red-700">
+                                                Minta Revisi
+                                            </button>
+
+                                            <x-confirm-modal :id="'payment-revision-'.$submission->id" title="Minta Revisi Bukti Pembayaran"
+                                                :form-action="route('admin.registrations.payment.request-revision', [$registration, $submission])"
+                                                confirm-label="Kirim Permintaan Revisi">
+                                                <label for="payment-reason-{{ $submission->id }}" class="block text-sm font-medium text-gray-700">Alasan revisi (wajib)</label>
+                                                <textarea id="payment-reason-{{ $submission->id }}" name="reason" rows="3" required
+                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"></textarea>
+                                            </x-confirm-modal>
+                                        @endif
+                                    </div>
+                                    @if($submission->review_note)
+                                        <p class="mt-1 text-xs text-red-600">Catatan: {{ $submission->review_note }}</p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    @if($payment->status->value === 'under_review')
+                        <button type="button" x-data x-on:click="$dispatch('open-modal-confirm-payment')"
+                            class="mt-4 min-h-[44px] rounded-md bg-green-600 px-4 text-sm font-medium text-white hover:bg-green-700">
+                            Konfirmasi Lunas
+                        </button>
+
+                        <x-confirm-modal id="confirm-payment" title="Konfirmasi Pembayaran Lunas"
+                            :form-action="route('admin.registrations.payment.confirm', $registration)" confirm-label="Konfirmasi Lunas">
+                            <div class="space-y-3">
+                                <div>
+                                    <label for="confirmed_amount" class="block text-sm font-medium text-gray-700">Nominal Diterima (Rp)</label>
+                                    <input id="confirmed_amount" name="confirmed_amount" type="number" step="0.01" min="0.01" required
+                                        value="{{ $payment->expected_amount }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                </div>
+                                <div>
+                                    <label for="transaction_reference" class="block text-sm font-medium text-gray-700">Referensi Transaksi (opsional)</label>
+                                    <input id="transaction_reference" name="transaction_reference" type="text"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                </div>
+                                <div>
+                                    <label for="admin_note" class="block text-sm font-medium text-gray-700">Catatan (opsional)</label>
+                                    <textarea id="admin_note" name="admin_note" rows="2"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"></textarea>
+                                </div>
+                            </div>
+                        </x-confirm-modal>
+                    @elseif($payment->status->value === 'paid')
+                        <x-alert type="success" class="mt-4">
+                            Lunas {{ $payment->confirmed_at?->format('d M Y H:i') }} &middot;
+                            Rp {{ number_format($payment->confirmed_amount, 0, ',', '.') }}
+                            @if($payment->transaction_reference) &middot; Ref: {{ $payment->transaction_reference }} @endif
+                        </x-alert>
+                    @endif
+                @endif
+            </div>
+
+            <div class="rounded-lg border border-gray-200 bg-white p-5">
                 <h2 class="font-semibold text-gray-900">Riwayat Status</h2>
                 <ol class="mt-3 space-y-2 text-sm">
                     @foreach($registration->histories->sortByDesc('changed_at') as $history)

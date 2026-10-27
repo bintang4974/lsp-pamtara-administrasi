@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentDownloadController;
+use App\Http\Controllers\PaymentProofDownloadController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\InfoController;
 use App\Models\ApplicationSetting;
@@ -36,6 +37,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'active'])
     ->get('dokumen/{submission}/unduh', [DocumentDownloadController::class, 'show'])
     ->name('documents.download');
+
+Route::middleware(['auth', 'active'])
+    ->get('pembayaran/bukti/{submission}/unduh', [PaymentProofDownloadController::class, 'show'])
+    ->name('payments.download');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';

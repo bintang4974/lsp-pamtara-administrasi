@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request): View
     {
         $registrations = $request->user()->registrations()
-            ->with(['certificationType', 'assessmentSchedule.tuk'])
+            ->with(['certificationType', 'assessmentSchedule.tuk', 'payment'])
             ->latest()
             ->get();
 

@@ -62,6 +62,13 @@
                    class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.registrations.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
                     Pendaftaran &amp; Verifikasi
                 </a>
+
+                <p class="mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">Lainnya</p>
+
+                <a href="{{ route('admin.settings.edit') }}"
+                   class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.settings.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    Pengaturan Aplikasi
+                </a>
             </nav>
         </aside>
 

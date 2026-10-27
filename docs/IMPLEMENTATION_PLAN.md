@@ -61,12 +61,12 @@ Centang `[x]` hanya setelah benar-benar selesai **dan** diverifikasi (migration/
 - [x] Daftar uji manual: AC-02, AC-03, AC-04.
 
 ## Phase 6 — Payment Workflow
-- [ ] Pengaturan rekening/VA bersama + nominal + instruksi (admin, diaudit).
-- [ ] Payment dibuat otomatis saat lolos administrasi.
-- [ ] Instruksi pembayaran hanya tampil setelah lolos administrasi.
-- [ ] Upload bukti (privat, versioning), revisi, konfirmasi admin (nominal, referensi, waktu).
-- [ ] Audit trail + notifikasi.
-- [ ] Daftar uji manual: AC-05 (unggah ≠ lunas; hanya admin yang bisa `paid`).
+- [x] Pengaturan rekening/VA bersama + nominal + instruksi (admin, diaudit).
+- [x] Payment dibuat otomatis saat lolos administrasi.
+- [x] Instruksi pembayaran hanya tampil setelah lolos administrasi.
+- [x] Upload bukti (privat, versioning), revisi, konfirmasi admin (nominal, referensi, waktu).
+- [x] Audit trail + notifikasi.
+- [x] Daftar uji manual: AC-05 (unggah ≠ lunas; hanya admin yang bisa `paid`).
 
 ## Phase 7 — Invitation dan Assessment Result
 - [ ] `InvitationService`: cek `paid` + data lengkap; render PDF **dari DB**; snapshot jadwal; versi; `is_current`.

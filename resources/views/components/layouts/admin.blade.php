@@ -63,11 +63,30 @@
                     Pendaftaran &amp; Verifikasi
                 </a>
 
+                <p class="mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">Laporan</p>
+
+                <a href="{{ route('admin.reports.registrations') }}"
+                   class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.reports.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    Laporan
+                </a>
+                <a href="{{ route('admin.imports.create') }}"
+                   class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.imports.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    Import Peserta
+                </a>
+                <a href="{{ route('admin.audit-logs.index') }}"
+                   class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.audit-logs.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    Audit Log
+                </a>
+
                 <p class="mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">Lainnya</p>
 
                 <a href="{{ route('admin.settings.edit') }}"
                    class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.settings.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
                     Pengaturan Aplikasi
+                </a>
+                <a href="{{ route('admin.qrcode.index') }}"
+                   class="block min-h-[44px] content-center rounded-md px-3 text-sm font-medium {{ request()->routeIs('admin.qrcode.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    QR Code
                 </a>
             </nav>
         </aside>

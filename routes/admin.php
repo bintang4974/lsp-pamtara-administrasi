@@ -4,13 +4,17 @@ use App\Http\Controllers\Admin\ApplicationSettingController;
 use App\Http\Controllers\Admin\AssessmentResultController;
 use App\Http\Controllers\Admin\AssessmentScheduleController;
 use App\Http\Controllers\Admin\AssessorController;
+use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Admin\CertificationTypeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DocumentRequirementController;
 use App\Http\Controllers\Admin\DocumentReviewController;
 use App\Http\Controllers\Admin\InvitationController;
+use App\Http\Controllers\Admin\ParticipantImportController;
 use App\Http\Controllers\Admin\PaymentReviewController;
+use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\RegistrationController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\TukController;
 use Illuminate\Support\Facades\Route;
 
@@ -73,4 +77,30 @@ Route::middleware(['auth', 'active', 'role:admin'])
         Route::put('registrations/{registration}/result', [AssessmentResultController::class, 'update'])->name('registrations.result.update');
         Route::post('registrations/{registration}/result/announce', [AssessmentResultController::class, 'announce'])->name('registrations.result.announce');
         Route::post('assessment-schedules/{assessment_schedule}/announce-results', [AssessmentResultController::class, 'announceSchedule'])->name('assessment-schedules.announce-results');
+
+        Route::prefix('reports')->name('reports.')->group(function () {
+            Route::get('registrations', [ReportController::class, 'registrations'])->name('registrations');
+            Route::get('registrations/export', [ReportController::class, 'registrationsExport'])->name('registrations.export');
+            Route::get('document-completeness', [ReportController::class, 'documentCompleteness'])->name('document-completeness');
+            Route::get('document-completeness/export', [ReportController::class, 'documentCompletenessExport'])->name('document-completeness.export');
+            Route::get('payments', [ReportController::class, 'payments'])->name('payments');
+            Route::get('payments/export', [ReportController::class, 'paymentsExport'])->name('payments.export');
+            Route::get('results', [ReportController::class, 'results'])->name('results');
+            Route::get('results/export', [ReportController::class, 'resultsExport'])->name('results.export');
+            Route::get('result-history', [ReportController::class, 'resultHistory'])->name('result-history');
+            Route::get('result-history/export', [ReportController::class, 'resultHistoryExport'])->name('result-history.export');
+        });
+
+        Route::get('audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
+
+        Route::prefix('imports')->name('imports.')->group(function () {
+            Route::get('create', [ParticipantImportController::class, 'create'])->name('create');
+            Route::get('template', [ParticipantImportController::class, 'template'])->name('template');
+            Route::post('/', [ParticipantImportController::class, 'store'])->name('store');
+            Route::get('{batch}', [ParticipantImportController::class, 'show'])->name('show');
+            Route::post('{batch}/commit', [ParticipantImportController::class, 'commit'])->name('commit');
+            Route::post('{batch}/discard', [ParticipantImportController::class, 'discard'])->name('discard');
+        });
+
+        Route::get('qrcode', [QrCodeController::class, 'index'])->name('qrcode.index');
     });

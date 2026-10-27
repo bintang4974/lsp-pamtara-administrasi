@@ -77,13 +77,13 @@ Centang `[x]` hanya setelah benar-benar selesai **dan** diverifikasi (migration/
 - [x] Daftar uji manual: AC-06, AC-07.
 
 ## Phase 8 — Reports dan Import
-- [ ] Laporan: pendaftaran (periode/sertifikasi/TUK), peserta per jadwal, kelengkapan dokumen, pembayaran, rekap penerimaan (terkonfirmasi), hasil, riwayat hasil, rekap total.
-- [ ] Filter + pagination; ekspor Excel/CSV (+PDF bila relevan) memakai query yang sama.
-- [ ] Dashboard admin dengan statistik + filter.
-- [ ] Import Excel: template, validasi, deteksi duplikat, preview, error per baris, konfirmasi, commit batch, ringkasan, aktivasi akun aman.
-- [ ] Audit log viewer admin.
-- [ ] QR code pendaftaran (URL stabil + intended redirect).
-- [ ] Daftar uji manual: AC-08.
+- [x] Laporan: pendaftaran (periode/sertifikasi/TUK), peserta per jadwal, kelengkapan dokumen, pembayaran, rekap penerimaan (terkonfirmasi), hasil, riwayat hasil, rekap total.
+- [x] Filter + pagination; ekspor Excel/CSV (+PDF bila relevan) memakai query yang sama.
+- [x] Dashboard admin dengan statistik + filter.
+- [x] Import Excel: template, validasi, deteksi duplikat, preview, error per baris, konfirmasi, commit batch, ringkasan, aktivasi akun aman.
+- [x] Audit log viewer admin.
+- [x] QR code pendaftaran (URL stabil + intended redirect).
+- [x] Daftar uji manual: AC-08.
 
 ## Phase 9 — Quality Assurance
 - [ ] Susun **panduan uji manual lengkap** (`docs/MANUAL_TEST_GUIDE.md`) dari seluruh AC-01 s.d. AC-09 untuk dipakai pemilik produk.
